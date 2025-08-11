@@ -46,7 +46,7 @@
 
             for (let i = 0; i < z; i++) {
                 gcode += "G01 X" + x + "\n";           // avanti
-                gcode += "G01 Y" + ((i + 1) * y) + "\n"; // scende
+                gcode += "G01 Y" + (i * y) + "\n"; // scende
                 gcode += "G01 X0\n";                   // indietro
                 gcode += "G01 Y" + ((i + 1) * y) + "\n"; // scende ancora
             }
