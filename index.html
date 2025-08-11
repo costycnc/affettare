@@ -44,11 +44,11 @@
 
             let gcode = "M3 S1000\nG21 F500 G90\nG92 X0 Y0\n"; // setup iniziale
 
-            for (let i = 0; i < z; i++) {
-                gcode += "G01 X" + x + "\n";           // avanti
+            for (let i = 1; i < z; i+=2) {
                 gcode += "G01 Y" + (i * y) + "\n"; // scende
-                gcode += "G01 X0\n";                   // indietro
+                gcode += "G01 X" + x + "\n";           // avanti
                 gcode += "G01 Y" + ((i + 1) * y) + "\n"; // scende ancora
+                gcode += "G01 X0\n";                   // indietro
             }
 
             document.getElementById('result').value = gcode;
