@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generatore G-code per affettare polistirolo con CNC o filo caldo. Imposta lunghezza, passo di discesa e numero di fette per creare tagli precisi.">
+    <meta name="keywords" content="affettare polistirolo, G-code polistirolo, taglio strati, CNC filo caldo, slicer polistirolo">
+    <meta name="author" content="Il Tuo Nome">
+    <title>G-code Affettare Polistirolo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        input, button, textarea {
+            margin: 5px 0;
+            padding: 5px;
+        }
+        textarea {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Generatore G-code per Affettare Polistirolo</h1>
+    <p>Questo strumento genera automaticamente il G-code per affettare un blocco di polistirolo in strati. Ideale per CNC a filo caldo.</p>
+
+    <label>X (lunghezza mm) = <input id="x" type="number" value="200"></label><br>
+    <label>Y (passo discesa mm) = <input id="y" type="number" value="5"></label><br>
+    <label>Z (numero di fette) = <input id="z" type="number" value="10"></label><br>
+    <button onclick="calcola();">Crea G-code</button><br>
+    <textarea id="result" readonly></textarea>
+
+    <script>
+        function calcola() {
+            let x = parseInt(document.getElementById('x').value, 10);
+            let y = parseInt(document.getElementById('y').value, 10);
+            let z = parseInt(document.getElementById('z').value, 10);
+
+            let gcode = "M3 S1000\nG21 F500 G90\nG92 X0 Y0\n"; // setup iniziale
+
+            for (let i = 0; i < z; i++) {
+                gcode += "G01 X" + x + "\n";           // avanti
+                gcode += "G01 Y" + ((i + 1) * y) + "\n"; // scende
+                gcode += "G01 X0\n";                   // indietro
+                gcode += "G01 Y" + ((i + 1) * y) + "\n"; // scende ancora
+            }
+
+            document.getElementById('result').value = gcode;
+        }
+    </script>
+
+</body>
+</html>
